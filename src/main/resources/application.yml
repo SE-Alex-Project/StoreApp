@@ -4,7 +4,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://localhost/storeEnhanced
+    url: jdbc:mysql://localhost/store_enhanced
     username: SAMPLE
     password: 12345
 jwt:
