@@ -1,0 +1,10 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost/storeEnhanced
+    username: SAMPLE
+    password: 12345
+jwt:
+  secret: ahmedeliwa
