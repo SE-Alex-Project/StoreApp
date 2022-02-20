@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import store.Validation.AdvanceInfo;
 import store.Validation.PasswordMatch;
 import store.Validation.ValidPassword;
 //import store.models.Role;
@@ -64,12 +66,13 @@ public class AuthenticationController {
     }
      */
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@Valid@RequestBody User user) {
+    public ResponseEntity<?> signUp(@Validated(AdvanceInfo.class) @RequestBody User user) {
         if (userRepo.existsByEmail(user.getEmail())){
             return ResponseEntity
                     .badRequest()
                     .body("Error: Email is already in use!");
         }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.CUSTOMER);
         Customer customer = new Customer();
         customer.setUser(user);
@@ -80,7 +83,7 @@ public class AuthenticationController {
         cartRepo.save(cart);
         customer.setCart(cart);
         customerRepo.save(customer);
-        return ResponseEntity.ok().body(customer);
+        return ResponseEntity.ok().body(user);
     }
 
 
@@ -95,33 +98,33 @@ public class AuthenticationController {
     }
 
 
-    @Data
-    @PasswordMatch(message = "{register.repeatPassword.mismatch}")
-    public static class RegistrationRequest {
-
-        @NotBlank(message = "User Email is required")
-        @Email
-        private String email;
-        @NotBlank(message = "User first Name is required")
-        private String fName;
-        @NotBlank(message = "User Last Name is required")
-        private String lName;
-
-        @NotBlank(message = "User Password is required")
-        @ValidPassword
-        private String password;
-
-        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-        private String confirmPassword;
-
-        public User getCustomer() {
-            User c = new User();
-            c.setEmail(email);
-            c.setFName(fName);
-            c.setLName(lName);
-            c.setPassword(password);
-            return c;
-        }
-    }
+//    @Data
+//    @PasswordMatch(message = "{register.repeatPassword.mismatch}")
+//    public static class RegistrationRequest {
+//
+//        @NotBlank(message = "User Email is required")
+//        @Email
+//        private String email;
+//        @NotBlank(message = "User first Name is required")
+//        private String fName;
+//        @NotBlank(message = "User Last Name is required")
+//        private String lName;
+//
+//        @NotBlank(message = "User Password is required")
+//        @ValidPassword
+//        private String password;
+//
+//        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+//        private String confirmPassword;
+//
+//        public User getCustomer() {
+//            User c = new User();
+//            c.setEmail(email);
+//            c.setFName(fName);
+//            c.setLName(lName);
+//            c.setPassword(password);
+//            return c;
+//        }
+//    }
 
 }

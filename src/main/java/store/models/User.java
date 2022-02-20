@@ -6,6 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
+import store.Validation.AdvanceInfo;
+import store.Validation.PasswordMatch;
 import store.Validation.ValidPassword;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ import java.util.*;
 @Data
 //@MappedSuperclass
 @Entity
+@PasswordMatch(groups = AdvanceInfo.class)
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +33,7 @@ public class User implements UserDetails {
 
     @NotBlank(message = "User Password is required")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @ValidPassword
+    @ValidPassword(groups = AdvanceInfo.class)
     private String password;
 
     @NotBlank(message = "User Confirm Password is required")
@@ -39,19 +42,12 @@ public class User implements UserDetails {
     private String confirmPassword;
 
 
-//    @ElementCollection(targetClass = Role.class)
-//    @Enumerated(EnumType.STRING)
-//    private Set<Role> roles = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Override
     @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
-//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//        for (Role role : roles)
-//            authorities.add(new SimpleGrantedAuthority(role.toString()));
-//        return authorities;
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
