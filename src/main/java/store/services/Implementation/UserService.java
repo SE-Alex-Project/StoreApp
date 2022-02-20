@@ -1,4 +1,4 @@
-package store.security;
+package store.services.Implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,11 +7,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import store.models.User;
 import store.repos.UserRepo;
+import store.services.interfaces.UserServiceInterface;
 
 import java.util.Optional;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserService implements UserDetailsService, UserServiceInterface {
     @Autowired
     private UserRepo userRepo;
 

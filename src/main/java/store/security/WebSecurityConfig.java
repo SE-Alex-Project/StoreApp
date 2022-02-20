@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import store.models.Role;
 import store.security.JWT.AuthEntryPointJwt;
 import store.security.JWT.JWTRequestFilter;
+import store.services.Implementation.UserService;
 
 
 @Configuration
@@ -33,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
+        return new UserService();
     }
 
     @Bean
