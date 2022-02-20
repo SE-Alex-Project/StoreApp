@@ -50,7 +50,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        final User user = userRepo.getById(request.getEmail());
+        final User user = userRepo.getByEmail(request.getEmail());
         final String token = jwtTokenUtil.generateToken(user);
         return ResponseEntity.ok("{\"token\": \""+ token +"\"}");
     }
