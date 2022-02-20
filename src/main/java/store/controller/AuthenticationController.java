@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import store.Validation.PasswordMatch;
 import store.Validation.ValidPassword;
 //import store.models.Role;
+import store.models.Cart;
+import store.models.Customer;
 import store.models.Role;
 import store.models.User;
 import store.repos.CartRepo;
@@ -46,10 +48,9 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-//        final User user = userRepo.getById(request.getEmail());
-//        final String token = jwtTokenUtil.generateToken(user);
-//        return ResponseEntity.ok("{\"token\": \""+ token +"\"}");
-        return ResponseEntity.ok("Off-course Work");
+        final User user = userRepo.getById(request.getEmail());
+        final String token = jwtTokenUtil.generateToken(user);
+        return ResponseEntity.ok("{\"token\": \""+ token +"\"}");
     }
 
 
@@ -63,26 +64,23 @@ public class AuthenticationController {
     }
      */
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody User registrationRequest) {
-//        if (customerRepo.existsByEmail(registrationRequest.getEmail())){
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body("Error: Email is already in use!");
-//        }
-//        registrationRequest.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-//        Customer customer = registrationRequest.getCustomer();
-//        customerRepo.save(customer);
-//        Cart c = new Cart();
-//        c.setCustomer(customer);
-//        cartRepo.save(c);
-//        customer.setCart(c);
-//        customerRepo.save(customer);
-//        return ResponseEntity.ok().body(customer);
-        Set<Role> s = new HashSet<>();
-        s.add(Role.ADMIN);
-        s.add(Role.EDITOR);
-        registrationRequest.setRoles(s);
-        return ResponseEntity.ok().body(registrationRequest);
+    public ResponseEntity<?> signUp(@Valid@RequestBody User user) {
+        if (userRepo.existsByEmail(user.getEmail())){
+            return ResponseEntity
+                    .badRequest()
+                    .body("Error: Email is already in use!");
+        }
+        user.setRole(Role.CUSTOMER);
+        Customer customer = new Customer();
+        customer.setUser(user);
+        userRepo.save(user);
+        Cart cart = new Cart();
+        cart.setCustomer(customer);
+        customerRepo.save(customer);
+        cartRepo.save(cart);
+        customer.setCart(cart);
+        customerRepo.save(customer);
+        return ResponseEntity.ok().body(customer);
     }
 
 
