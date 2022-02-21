@@ -10,4 +10,6 @@ public interface EmployeeService {
     List<Employee> getAllEmployees();
 
     Employee getEmployee(String employeeEmail);
+
+    void modifyEmployee(EmployeeRequest employee);
 }

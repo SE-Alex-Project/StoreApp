@@ -5,9 +5,10 @@ import org.springframework.stereotype.Service;
 import store.models.Store;
 import store.repos.StoreRepo;
 import store.repos.UserRepo;
+import store.services.interfaces.StoreService;
 
 @Service
-public class StoreServiceImpl implements store.services.interfaces.StoreService {
+public class StoreServiceImpl implements StoreService {
     @Autowired
     UserRepo userRepo;
     @Autowired
