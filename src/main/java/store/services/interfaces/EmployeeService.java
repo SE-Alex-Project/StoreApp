@@ -1,12 +1,12 @@
 package store.services.interfaces;
 
 import store.models.Employee;
-import store.models.restModles.AddEmployee;
+import store.models.restModles.EmployeeRequest;
 
 import java.util.List;
 
 public interface EmployeeService {
-    void addEmployee(AddEmployee addEmployee);
+    void addEmployee(EmployeeRequest employeeRequest);
     List<Employee> getAllEmployees();
 
     Employee getEmployee(String employeeEmail);

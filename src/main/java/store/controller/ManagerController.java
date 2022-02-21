@@ -6,7 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import store.models.Employee;
 import store.models.User;
-import store.models.restModles.AddEmployee;
+import store.models.restModles.EmployeeRequest;
 import store.security.JWT.JwtTokenUtil;
 import store.services.interfaces.CustomerService;
 import store.services.interfaces.EmployeeService;
@@ -31,8 +31,8 @@ public class ManagerController {
     JwtTokenUtil jwtTokenUtil;
 
     @PostMapping("/addEmployee")
-    public void addEmployee(@Validated(AdvanceInfo.class) @RequestBody AddEmployee addEmployee) {
-        employeeService.addEmployee(addEmployee);
+    public void addEmployee(@Validated(AdvanceInfo.class) @RequestBody EmployeeRequest employeeRequest) {
+        employeeService.addEmployee(employeeRequest);
     }
 
     @PostMapping("/getEmployees")

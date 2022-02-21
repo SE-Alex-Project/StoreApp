@@ -6,7 +6,7 @@ import store.models.User;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class AddEmployee{
+public class EmployeeRequest {
     private User user;
 
     @NotBlank(message = "Employee Store is required")

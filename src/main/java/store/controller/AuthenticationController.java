@@ -1,6 +1,5 @@
 package store.controller;
 
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +13,8 @@ import store.repos.UserRepo;
 import store.security.JWT.JwtTokenUtil;
 import store.services.interfaces.UserService;
 import store.validation.AdvanceInfo;
-import store.validation.ValidPassword;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.Map;
 
 @CrossOrigin
@@ -71,46 +67,5 @@ public class AuthenticationController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error: Email is already in use!");
         userRepo.save(userService.handleUser(user));
     }
-
-
-    @Data
-    public static class LoginRequest {
-        @NotBlank(message = "User Email is required")
-        @Email
-        private String email;
-        @NotBlank(message = "User Password is required")
-        @ValidPassword
-        private String password;
-    }
-
-
-//    @Data
-//    @PasswordMatch(message = "{register.repeatPassword.mismatch}")
-//    public static class RegistrationRequest {
-//
-//        @NotBlank(message = "User Email is required")
-//        @Email
-//        private String email;
-//        @NotBlank(message = "User first Name is required")
-//        private String fName;
-//        @NotBlank(message = "User Last Name is required")
-//        private String lName;
-//
-//        @NotBlank(message = "User Password is required")
-//        @ValidPassword
-//        private String password;
-//
-//        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-//        private String confirmPassword;
-//
-//        public User getCustomer() {
-//            User c = new User();
-//            c.setEmail(email);
-//            c.setFName(fName);
-//            c.setLName(lName);
-//            c.setPassword(password);
-//            return c;
-//        }
-//    }
 
 }
