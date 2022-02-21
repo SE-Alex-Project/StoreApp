@@ -27,7 +27,8 @@ public class CartController {
     @PostMapping("/buy")
     public void buyCart(@RequestHeader("Authorization") String token) {
         String userEmail =  jwtTokenUtil.getUserEmailFromToken(jwtTokenUtil.parseHeaderAuth(token));
-        cartService.BuyCart(userEmail);
+        cartService.BuyCart(userEmail,1);
+        System.out.println("success");
     }
 
 }

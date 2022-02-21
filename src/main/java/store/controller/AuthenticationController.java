@@ -2,12 +2,14 @@ package store.controller;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import store.validation.AdvanceInfo;
 import store.validation.ValidPassword;
 import store.models.Cart;
@@ -43,7 +45,7 @@ public class AuthenticationController {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         final User user = userRepo.getById(request.getEmail());
         final String token = jwtTokenUtil.generateToken(user);
-        return ResponseEntity.ok("{\"token\": \""+ token +"\"}");
+        return ResponseEntity.ok("{\"token\": \"" + token + "\"}");
     }
 
 
@@ -57,20 +59,15 @@ public class AuthenticationController {
     }
      */
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@Validated(AdvanceInfo.class) @RequestBody User user) {
-        if (userRepo.existsById(user.getEmail())){
-            return ResponseEntity
-                    .badRequest()
-                    .body("Error: Email is already in use!");
-        }
+    public void signUp(@Validated(AdvanceInfo.class) @RequestBody User user) {
+        if (userRepo.existsById(user.getEmail()))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error: Email is already in use!");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.CUSTOMER);
         Cart cart = new Cart();
         user.setCart(cart);
-        userRepo.save(user);
         cart.setUser(user);
-        cartRepo.save(cart);
-        return ResponseEntity.ok(null);
+        userRepo.save(user);
     }
 
 

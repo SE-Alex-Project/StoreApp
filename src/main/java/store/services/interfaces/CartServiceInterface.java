@@ -8,7 +8,7 @@ public interface CartServiceInterface {
     Cart getCart(String userEmail);
 
     //return new Saved Cart
-    Cart BuyCart(String userEmail);
+    void BuyCart(String userEmail,Integer StoreId);
 
     void modifyCart(Cart oldCart , Cart newCart);
 

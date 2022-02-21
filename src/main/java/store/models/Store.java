@@ -3,6 +3,7 @@ package store.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -20,5 +21,5 @@ public class Store {
     @ElementCollection
     @MapKeyJoinColumn(name = "product_id")
     @Column(name = "quantity")
-    private Map<Product,Integer> products;
+    private Map<Product,Integer> products = new HashMap<>();
 }

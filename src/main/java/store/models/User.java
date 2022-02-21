@@ -40,7 +40,7 @@ public class User implements UserDetails {
     @ValidPassword(groups = AdvanceInfo.class)
     private String password;
 
-    @NotBlank(message = "User Confirm Password is required")
+    @NotBlank(message = "User Confirm Password is required",groups = AdvanceInfo.class)
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String confirmPassword;
