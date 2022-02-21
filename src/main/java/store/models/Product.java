@@ -13,10 +13,14 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
     private String name;
 
-    @ManyToOne(targetEntity = Category.class)
+    @ManyToOne
+    @JoinColumn(
+            name ="category_name",
+            referencedColumnName = "categoryName"
+    )
     private Category categoryName;
     private double price;
     private String Description;
@@ -24,8 +28,5 @@ public class Product {
     @ManyToOne(targetEntity = Employee.class)
     private Employee addedBY;
     private Date addDate;
-
-    @OneToMany(targetEntity = Image.class)
-    private List<Image> images;
 
 }

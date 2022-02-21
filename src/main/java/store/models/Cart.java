@@ -12,7 +12,7 @@ import java.util.List;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
 
     @ManyToOne(targetEntity = Customer.class)
     @NotNull

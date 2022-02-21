@@ -1,17 +1,19 @@
 package store.models;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 
 
 @Data
+@Builder
 @Entity
 public class Employee{
     @Id
-    private int ID;
+    private int id;
     @MapsId
-    @OneToOne
+    @OneToOne()
     private User user;
     @ManyToOne(targetEntity = Store.class)
     private Store store;

@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Customer{
 
     @Id
-    private int ID;
+    private int id;
 
     @OneToOne
     @MapsId
