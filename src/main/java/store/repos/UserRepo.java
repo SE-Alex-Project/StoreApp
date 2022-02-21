@@ -6,6 +6,9 @@ import org.springframework.data.repository.query.Param;
 import store.models.Role;
 import store.models.User;
 
+import java.util.List;
+import java.util.Map;
+
 public interface UserRepo extends JpaRepository<User, String> {
     Role getRoleByEmail(String userEmail);
     @Query(
@@ -17,5 +20,5 @@ public interface UserRepo extends JpaRepository<User, String> {
                     GROUP BY user_email
                     ORDER BY totalPrice DESC LIMIT :count ;"""
     )
-    Object topUser(@Param("count") Integer count);
+    List<Map<String, String>> topUser(@Param("count") Integer count);
 }

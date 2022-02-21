@@ -5,7 +5,7 @@ import store.models.restModles.AddEmployee;
 
 import java.util.List;
 
-public interface EmployeeServiceInterface {
+public interface EmployeeService {
     void addEmployee(AddEmployee addEmployee);
     List<Employee> getAllEmployees();
 

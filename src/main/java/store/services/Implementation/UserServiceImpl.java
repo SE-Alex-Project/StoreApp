@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 import store.models.Cart;
 import store.models.Role;
 import store.models.User;
-import store.services.interfaces.UserServiceInterface;
 
 @Service
-public class UserService implements UserServiceInterface {
+public class UserServiceImpl implements store.services.interfaces.UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 

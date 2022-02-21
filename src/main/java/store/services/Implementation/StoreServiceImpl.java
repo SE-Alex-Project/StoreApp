@@ -2,19 +2,19 @@ package store.services.Implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import store.models.User;
+import store.models.Store;
+import store.repos.StoreRepo;
 import store.repos.UserRepo;
-import store.services.interfaces.CustomerServiceInterface;
-
-import java.util.List;
 
 @Service
-public class CustomerService implements CustomerServiceInterface {
+public class StoreServiceImpl implements store.services.interfaces.StoreService {
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    StoreRepo storeRepo;
 
     @Override
-    public List<User> topUsers(Integer count) {
-        return null;
+    public void addStore(Store store) {
+        storeRepo.save(store);
     }
 }

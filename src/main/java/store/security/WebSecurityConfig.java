@@ -15,10 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import store.models.Role;
 import store.security.JWT.AuthEntryPointJwt;
 import store.security.JWT.JWTRequestFilter;
-import store.services.Implementation.UserService;
 
 
 @Configuration

@@ -12,7 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import store.models.User;
 import store.repos.UserRepo;
 import store.security.JWT.JwtTokenUtil;
-import store.services.Implementation.UserService;
+import store.services.interfaces.UserService;
 import store.validation.AdvanceInfo;
 import store.validation.ValidPassword;
 

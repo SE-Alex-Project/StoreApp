@@ -5,6 +5,9 @@ import org.springframework.data.repository.query.Param;
 import store.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+import java.util.Map;
+
 
 public interface ProductRepo extends JpaRepository<Product,Integer> {
     @Query(
@@ -16,7 +19,7 @@ public interface ProductRepo extends JpaRepository<Product,Integer> {
                     GROUP BY p.id
                     ORDER BY totalSales DESC LIMIT :count ;"""
     )
-    Object topSales(@Param("count") Integer count);
+    List<Map<String, String>> topSales(@Param("count") Integer count);
 
     @Query(
             nativeQuery = true,
@@ -27,5 +30,5 @@ public interface ProductRepo extends JpaRepository<Product,Integer> {
                     GROUP BY p.id
                     ORDER BY totalSales DESC;"""
     )
-    Object totalSales();
+    List<Map<String, String>> totalSales();
 }

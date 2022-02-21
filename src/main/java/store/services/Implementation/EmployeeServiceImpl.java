@@ -9,12 +9,11 @@ import store.models.restModles.AddEmployee;
 import store.repos.EmployeeRepo;
 import store.repos.StoreRepo;
 import store.repos.UserRepo;
-import store.services.interfaces.EmployeeServiceInterface;
 
 import java.util.List;
 
 @Service
-public class EmployeeService implements EmployeeServiceInterface {
+public class EmployeeServiceImpl implements store.services.interfaces.EmployeeService {
 
     @Autowired
     StoreRepo storeRepo;
@@ -23,7 +22,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     @Autowired
     EmployeeRepo employeeRepo;
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     @Override
     public void addEmployee(AddEmployee addEmployee) {

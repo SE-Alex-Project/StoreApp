@@ -4,7 +4,7 @@ import store.models.User;
 
 import java.util.List;
 
-public interface CustomerServiceInterface {
+public interface CustomerService {
 
     List<User> topUsers(Integer count);
 }

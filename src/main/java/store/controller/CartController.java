@@ -1,13 +1,11 @@
 package store.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.web.bind.annotation.*;
 import store.models.Cart;
 import store.models.Product;
-
 import store.security.JWT.JwtTokenUtil;
-import store.services.Implementation.CartService;
+import store.services.interfaces.CartService;
 
 import javax.validation.Valid;
 import java.util.Map;

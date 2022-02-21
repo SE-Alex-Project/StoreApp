@@ -5,7 +5,7 @@ import store.models.Product;
 
 import java.util.Map;
 
-public interface CartServiceInterface {
+public interface CartService {
 
     Cart getCart(String userEmail);
 

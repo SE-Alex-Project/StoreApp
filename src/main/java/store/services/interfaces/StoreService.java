@@ -1,8 +1,7 @@
 package store.services.interfaces;
 
-import store.models.Role;
 import store.models.Store;
 
-public interface StoreServiceInterface {
+public interface StoreService {
     void addStore(Store store);
 }

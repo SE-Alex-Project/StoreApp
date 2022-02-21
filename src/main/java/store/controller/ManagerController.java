@@ -8,11 +8,13 @@ import store.models.Employee;
 import store.models.User;
 import store.models.restModles.AddEmployee;
 import store.security.JWT.JwtTokenUtil;
-import store.services.Implementation.CustomerService;
-import store.services.Implementation.EmployeeService;
+import store.services.interfaces.CustomerService;
+import store.services.interfaces.EmployeeService;
+import store.services.interfaces.ProductService;
 import store.validation.AdvanceInfo;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -23,6 +25,8 @@ public class ManagerController {
     EmployeeService employeeService;
     @Autowired
     CustomerService customerService;
+    @Autowired
+    ProductService productService;
     @Autowired
     JwtTokenUtil jwtTokenUtil;
 
@@ -61,13 +65,13 @@ public class ManagerController {
 
 
     @GetMapping("/totalSales")
-    public void totalSales() {
-
+    public List<Map<String,String>> totalSales() {
+        return productService.totalSales();
     }
 
     @GetMapping("/top10Sales")
-    public void topSales() {
-
+    public List<Map<String,String>> topSales(@RequestParam("count") Integer count) {
+        return productService.topSales(count);
     }
 
 }
