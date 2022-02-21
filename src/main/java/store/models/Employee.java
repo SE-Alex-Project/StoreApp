@@ -16,9 +16,11 @@ import javax.persistence.*;
 public class Employee {
     @Id
     private int id;
+
     @MapsId
     @OneToOne()
     private User user;
+
     @ManyToOne(targetEntity = Store.class)
     private Store store;
 //    private String eRole;

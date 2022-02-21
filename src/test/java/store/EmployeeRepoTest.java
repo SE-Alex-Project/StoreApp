@@ -18,8 +18,6 @@ public class EmployeeRepoTest {
     private EmployeeRepo employeerepo;
     @Autowired
     private StoreRepo storeRepo;
-    @Autowired
-    private UserRepo userRepo;
 
     @Test
     void saveEmployee() {
@@ -31,13 +29,12 @@ public class EmployeeRepoTest {
                 .confirmPassword("12345")
                 .role(Role.EMPLOYEE)
                 .build();
-//        userRepo.save(user);
 
         Store store =Store.builder()
                 .location("alex")
                 .name("store_1")
                 .build();
-//        storeRepo.save(store);
+        storeRepo.save(store);
 
         Employee employee = Employee.builder()
 //                .eRole("EMPLOYEE")
@@ -45,6 +42,7 @@ public class EmployeeRepoTest {
                 .store(store)
                 .user(user)
                 .build();
+        employeerepo.save(employee);
 
         //////////////////////////////////////////////////
         User user2 = User.builder()
@@ -55,7 +53,7 @@ public class EmployeeRepoTest {
                 .confirmPassword("12345")
                 .role(Role.EMPLOYEE)
                 .build();
-//        userRepo.save(user2);
+
         Employee employee2 = Employee.builder()
 //                .eRole("EMPLOYEE")
                 .salary(5000)
@@ -63,7 +61,6 @@ public class EmployeeRepoTest {
                 .user(user2)
                 .build();
 
-        employeerepo.save(employee);
         employeerepo.save(employee2);
     }
 }
