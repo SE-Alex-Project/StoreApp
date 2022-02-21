@@ -36,7 +36,7 @@ public class CartService implements CartServiceInterface {
 
     @Override
     @Transactional
-    public void BuyCart(String userEmail, Integer StoreId) {
+    public void buyCart(String userEmail, Integer StoreId) {
         Cart c = getCart(userEmail);
         Optional<Store> store = storeRepo.findById(StoreId);
         if (store.isEmpty())

@@ -2,33 +2,24 @@ package store.controller;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import store.validation.AdvanceInfo;
-import store.validation.ValidPassword;
-import store.models.Cart;
-import store.models.Role;
 import store.models.User;
-import store.repos.CartRepo;
 import store.repos.UserRepo;
 import store.security.JWT.JwtTokenUtil;
+import store.services.Implementation.UserService;
+import store.validation.AdvanceInfo;
+import store.validation.ValidPassword;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -47,9 +38,7 @@ public class AuthenticationController {
 //    }
 
     @Autowired
-    CartRepo cartRepo;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    UserService userService;
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
@@ -59,9 +48,9 @@ public class AuthenticationController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        final User user = userRepo.getById(request.getEmail());
+    public ResponseEntity<?> login(@Valid @RequestBody Map<String,String> request) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.get("email"), request.get("password")));
+        final User user = userRepo.getById(request.get("email"));
         final String token = jwtTokenUtil.generateToken(user);
         return ResponseEntity.ok("{\"token\": \"" + token + "\"}");
     }
@@ -80,12 +69,7 @@ public class AuthenticationController {
     public void signUp(@Validated({AdvanceInfo.class}) @RequestBody User user) {
         if (userRepo.existsById(user.getEmail()))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error: Email is already in use!");
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.CUSTOMER);
-        Cart cart = new Cart();
-        user.setCart(cart);
-        cart.setUser(user);
-        userRepo.save(user);
+        userRepo.save(userService.handleUser(user));
     }
 
 

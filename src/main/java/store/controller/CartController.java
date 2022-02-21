@@ -9,6 +9,7 @@ import store.models.Product;
 import store.security.JWT.JwtTokenUtil;
 import store.services.Implementation.CartService;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 
@@ -25,7 +26,7 @@ public class CartController {
     @PostMapping("/buy")
     public void buyCart(@RequestHeader("Authorization") String token) {
         String userEmail =  jwtTokenUtil.getUserEmailFromToken(jwtTokenUtil.parseHeaderAuth(token));
-        cartService.BuyCart(userEmail,1);
+        cartService.buyCart(userEmail,1);
     }
 
     @PostMapping("/get")
@@ -35,14 +36,14 @@ public class CartController {
     }
 
     @PostMapping("/add")//validate_addToCart
-    public void addToCart(@RequestHeader("Authorization") String token , @RequestBody Map<Product,Integer> products ) {
+    public void addToCart(@RequestHeader("Authorization") String token ,@Valid @RequestBody Map<Product,Integer> products ) {
         String userEmail =  jwtTokenUtil.getUserEmailFromToken(jwtTokenUtil.parseHeaderAuth(token));
         cartService.addToCart(userEmail,products);
     }
 
 
     @PostMapping("/modify")
-    public void modify(@RequestHeader("Authorization") String token , @RequestBody Map<Product,Integer> products) {
+    public void modify(@RequestHeader("Authorization") String token ,@Valid @RequestBody Map<Product,Integer> products) {
         String userEmail =  jwtTokenUtil.getUserEmailFromToken(jwtTokenUtil.parseHeaderAuth(token));
         cartService.modifyCart(userEmail,products);
     }

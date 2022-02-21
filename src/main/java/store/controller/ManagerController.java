@@ -1,52 +1,51 @@
 package store.controller;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.ParseException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
+import net.minidev.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import store.models.Employee;
+import store.models.User;
+import store.models.restModles.AddEmployee;
+import store.security.JWT.JwtTokenUtil;
+import store.services.Implementation.CustomerService;
+import store.services.Implementation.EmployeeService;
+import store.validation.AdvanceInfo;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/manager")
 public class ManagerController {
 
-    /*{
-        "token" : "token",
-        "email":"user email",
-        "firstName": "user first name",
-        "lastName": "user last name",
-        "password": "user hashed password",
-        "store":"1",
-        "erole":role,
-        "salary":salary
-    }*/
-    @PostMapping("/addEmployee")
-    public void addEmployee(@RequestBody JSONObject employee) {
+    @Autowired
+    EmployeeService employeeService;
+    @Autowired
+    CustomerService customerService;
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
 
+    @PostMapping("/addEmployee")
+    public void addEmployee(@Validated(AdvanceInfo.class) @RequestBody AddEmployee addEmployee) {
+        employeeService.addEmployee(addEmployee);
     }
 
     @PostMapping("/getEmployees")
-    public void getEmployees(@RequestBody String token) {
-
+    public List<Employee> getEmployees() {
+        return employeeService.getAllEmployees();
     }
 
-    /*
-     * {
-     * "token": token
-     * "email":emp-email
-     * }
-     */
 
     @PostMapping("/getEmployeeInfo")
-    public void getEmployeeInfo(@RequestBody JSONObject getEmp) {
-
+    public Employee getEmployeeInfo(@RequestParam(name = "EId") String employeeEmail) {
+        return employeeService.getEmployee(employeeEmail);
     }
 
-    @PostMapping("/getManagerInfo")
-    public void getManagerInfo(@RequestBody String token) {
-
+    @PostMapping("/getInfo")
+    public Employee getManagerInfo(@RequestHeader("Authorization") String token) {
+        String userEmail = jwtTokenUtil.getUserEmailFromToken(jwtTokenUtil.parseHeaderAuth(token));
+        return employeeService.getEmployee(userEmail);
     }
 
 
@@ -55,9 +54,9 @@ public class ManagerController {
 
     }
 
-    @GetMapping("/top10Customers")
-    public void topCustomers() {
-
+    @GetMapping("/topUsers")
+    public List<User> topUsers(@RequestParam("count") Integer count) {
+        return customerService.topUsers(count);
     }
 
 
