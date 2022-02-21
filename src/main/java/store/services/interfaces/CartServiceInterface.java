@@ -3,6 +3,8 @@ package store.services.interfaces;
 import store.models.Cart;
 import store.models.Product;
 
+import java.util.Map;
+
 public interface CartServiceInterface {
 
     Cart getCart(String userEmail);
@@ -10,9 +12,9 @@ public interface CartServiceInterface {
     //return new Saved Cart
     void BuyCart(String userEmail,Integer StoreId);
 
-    void modifyCart(Cart oldCart , Cart newCart);
+    void modifyCart(String userEmail, Map<Product,Integer> products);
 
-    void addToCart(Cart cart,Product... products);
+    void addToCart(String userEmail, Map<Product,Integer> products);
 
 
 }

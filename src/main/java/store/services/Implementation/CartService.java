@@ -52,12 +52,17 @@ public class CartService implements CartServiceInterface {
     }
 
     @Override
-    public void modifyCart(Cart oldCart, Cart newCart) {
-
+    public void modifyCart(String userEmail, Map<Product, Integer> products) {
+        Cart cart = getCart(userEmail);
+        cart.setProducts(products);
+        cartRepo.save(cart);
     }
 
-    @Override
-    public void addToCart(Cart cart, Product... products) {
 
+    @Override
+    public void addToCart(String userEmail, Map<Product,Integer> products) {
+        Cart userCart = getCart(userEmail);
+        products.forEach(userCart::addProduct);
+        cartRepo.save(userCart);
     }
 }

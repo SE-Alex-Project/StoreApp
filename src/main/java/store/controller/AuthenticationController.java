@@ -2,14 +2,20 @@ package store.controller;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import store.validation.AdvanceInfo;
 import store.validation.ValidPassword;
 import store.models.Cart;
@@ -22,11 +28,23 @@ import store.security.JWT.JwtTokenUtil;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
+
+//    @ControllerAdvice
+//    public static class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+//
+//        @ExceptionHandler(MethodArgumentNotValidException.class)
+//        protected ResponseEntity<Object> handleConflict(Exception ex, WebRequest request) {
+////            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
+//            return handleExceptionInternal(ex, ex.getMessage(),
+//                    new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+//        }
+//    }
 
     @Autowired
     CartRepo cartRepo;
@@ -59,7 +77,7 @@ public class AuthenticationController {
     }
      */
     @PostMapping("/signup")
-    public void signUp(@Validated(AdvanceInfo.class) @RequestBody User user) {
+    public void signUp(@Validated({AdvanceInfo.class}) @RequestBody User user) {
         if (userRepo.existsById(user.getEmail()))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error: Email is already in use!");
         user.setPassword(passwordEncoder.encode(user.getPassword()));
