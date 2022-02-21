@@ -2,7 +2,9 @@ package store.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import lombok.Data;
@@ -20,6 +22,8 @@ import java.util.*;
 //@MappedSuperclass
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @PasswordMatch(groups = AdvanceInfo.class)
 public class User implements UserDetails {
     @Id

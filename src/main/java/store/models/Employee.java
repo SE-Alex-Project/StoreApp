@@ -1,15 +1,19 @@
 package store.models;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Employee{
+public class Employee {
     @Id
     private int id;
     @MapsId
