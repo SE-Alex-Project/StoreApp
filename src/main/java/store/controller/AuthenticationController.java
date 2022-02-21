@@ -1,6 +1,5 @@
 package store.controller;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,9 +8,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import store.Validation.AdvanceInfo;
-import store.Validation.PasswordMatch;
-import store.Validation.ValidPassword;
+import store.validation.AdvanceInfo;
+import store.validation.ValidPassword;
 //import store.models.Role;
 import store.models.Cart;
 import store.models.Customer;
@@ -25,8 +23,6 @@ import store.security.JWT.JwtTokenUtil;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.HashSet;
-import java.util.Set;
 
 @CrossOrigin
 @RestController

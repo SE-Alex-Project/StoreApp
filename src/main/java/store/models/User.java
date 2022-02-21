@@ -6,9 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
-import store.Validation.AdvanceInfo;
-import store.Validation.PasswordMatch;
-import store.Validation.ValidPassword;
+import store.validation.AdvanceInfo;
+import store.validation.PasswordMatch;
+import store.validation.ValidPassword;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -22,7 +22,7 @@ import java.util.*;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
 
     @Column(unique = true)
     @Email

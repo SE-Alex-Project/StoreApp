@@ -1,4 +1,4 @@
-package store.Validation;
+package store.validation;
 
 import store.models.User;
 

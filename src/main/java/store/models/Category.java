@@ -11,5 +11,5 @@ import javax.validation.constraints.NotBlank;
 public class Category {
     @Id
     @NotBlank(message="Category Name is required")
-    private String categoryName;
+    private String name;
 }

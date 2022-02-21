@@ -4,6 +4,7 @@ package store.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,19 +14,19 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
     private String name;
 
     @ManyToOne(targetEntity = Category.class)
-    private Category categoryName;
+    private Category category;
     private double price;
-    private String Description;
+    private String description;
 
     @ManyToOne(targetEntity = Employee.class)
     private Employee addedBY;
     private Date addDate;
 
-    @OneToMany(targetEntity = Image.class)
-    private List<Image> images;
+    @ElementCollection
+    private List<Image> images = new ArrayList<>();
 
 }

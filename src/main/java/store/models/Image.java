@@ -3,13 +3,11 @@ package store.models;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 
 
 @Data
-@Entity
+@Embeddable
 public class Image {
-    @Id
-    private String Url;
+    private String url;
 }

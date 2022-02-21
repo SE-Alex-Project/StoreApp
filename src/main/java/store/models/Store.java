@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ID;
+    private Integer id;
     private String location;
-    private String storeName;
+    private String name;
 }
