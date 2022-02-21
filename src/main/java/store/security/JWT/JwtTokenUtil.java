@@ -6,7 +6,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +26,15 @@ public class JwtTokenUtil /*implements Serializable*/ {
     private String secret;
 
     //retrieve username from jwt token
-    public String getUsernameFromToken(String token) {
+    public String getUserEmailFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    //parse header to get token
+    public String parseHeaderAuth(String headerAuth) {
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer "))
+            return headerAuth.substring(7);
+        return null;
     }
 
     //retrieve expiration date from jwt token
@@ -70,7 +79,7 @@ public class JwtTokenUtil /*implements Serializable*/ {
     public Boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return true;
+            return !isTokenExpired(token);
         } catch (Exception e) {
             return false;
         }

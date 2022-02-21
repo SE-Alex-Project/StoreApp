@@ -3,6 +3,7 @@ package store.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Map;
 
 @Data
 @Builder
@@ -15,4 +16,9 @@ public class Store {
     private Integer id;
     private String location;
     private String name;
+
+    @ElementCollection
+    @MapKeyJoinColumn(name = "product_id")
+    @Column(name = "quantity")
+    private Map<Product,Integer> products;
 }

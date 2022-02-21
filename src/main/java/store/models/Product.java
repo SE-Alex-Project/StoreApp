@@ -17,12 +17,12 @@ public class Product {
     private int id;
     private String name;
 
-    @ManyToOne(targetEntity = Category.class)
+    @ManyToOne
     private Category category;
     private double price;
     private String description;
 
-    @ManyToOne(targetEntity = Employee.class)
+    @ManyToOne
     private Employee addedBY;
     private Date addDate;
 

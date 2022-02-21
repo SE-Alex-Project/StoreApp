@@ -10,13 +10,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import store.validation.AdvanceInfo;
 import store.validation.ValidPassword;
-//import store.models.Role;
 import store.models.Cart;
-import store.models.Customer;
 import store.models.Role;
 import store.models.User;
 import store.repos.CartRepo;
-import store.repos.CustomerRepo;
 import store.repos.UserRepo;
 import store.security.JWT.JwtTokenUtil;
 
@@ -29,8 +26,6 @@ import javax.validation.constraints.NotBlank;
 @RequestMapping("/auth")
 public class AuthenticationController {
 
-    @Autowired
-    CustomerRepo customerRepo;
     @Autowired
     CartRepo cartRepo;
     @Autowired
@@ -46,7 +41,7 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        final User user = userRepo.getByEmail(request.getEmail());
+        final User user = userRepo.getById(request.getEmail());
         final String token = jwtTokenUtil.generateToken(user);
         return ResponseEntity.ok("{\"token\": \""+ token +"\"}");
     }
@@ -63,23 +58,19 @@ public class AuthenticationController {
      */
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@Validated(AdvanceInfo.class) @RequestBody User user) {
-        if (userRepo.existsByEmail(user.getEmail())){
+        if (userRepo.existsById(user.getEmail())){
             return ResponseEntity
                     .badRequest()
                     .body("Error: Email is already in use!");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.CUSTOMER);
-        Customer customer = new Customer();
-        customer.setUser(user);
-        userRepo.save(user);
         Cart cart = new Cart();
-        cart.setCustomer(customer);
-        customerRepo.save(customer);
+        user.setCart(cart);
+        userRepo.save(user);
+        cart.setUser(user);
         cartRepo.save(cart);
-        customer.setCart(cart);
-        customerRepo.save(customer);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok(null);
     }
 
 

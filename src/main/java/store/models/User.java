@@ -16,6 +16,7 @@ import store.validation.ValidPassword;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Data
@@ -24,13 +25,9 @@ import java.util.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@PasswordMatch(groups = AdvanceInfo.class)
+@PasswordMatch(groups = AdvanceInfo.class, message = "password and confirmed password don't match")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(unique = true)
     @Email
     private String email;
     @NotBlank(message = "User first Name is required")
@@ -48,6 +45,10 @@ public class User implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String confirmPassword;
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
+    private Cart cart;
 
     @Enumerated(EnumType.STRING)
     private Role role;

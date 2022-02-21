@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -15,13 +18,16 @@ import javax.persistence.*;
 @Entity
 public class Employee {
     @Id
-    private int id;
+    private String id;
 
     @MapsId
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn
     private User user;
 
-    @ManyToOne(targetEntity = Store.class)
+    @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Store.class)
+    @JoinColumn
+//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Store store;
 //    private String eRole;
     private double salary;

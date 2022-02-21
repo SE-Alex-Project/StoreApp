@@ -14,10 +14,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(targetEntity = Customer.class)
-    @JoinColumn(name = "customer_id")
-    @NotNull
-    private Customer customer;
+    @ManyToOne
+    private User user;
     private Date buyDate;
 
     @OneToMany(targetEntity = Product.class)
