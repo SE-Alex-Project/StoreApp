@@ -4,10 +4,9 @@ package store.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import store.models.Store;
-import store.security.JWT.JwtTokenUtil;
 import store.services.Implementation.StoreService;
 
-import javax.validation.Valid;
+import java.util.List;
 
 //
 //
@@ -16,14 +15,25 @@ import javax.validation.Valid;
 @RequestMapping("/store")
 public class StoreController {
     @Autowired
-    JwtTokenUtil jwtTokenUtil;
-    @Autowired
     StoreService storeService;
 
     @PostMapping("/addStore")
-    public Store addStore(@RequestBody Store store) {
+    public void addStore(@RequestBody Store store) {
         storeService.addStore(store);
-        return  store;
+    }
+
+    @GetMapping("/get_list")
+    public List<Store> getStoreList() {
+        return storeService.getAllStores();
+    }
+    @PostMapping("/get_store")
+    public Store getStore(@RequestBody Integer store_id) {
+        return storeService.getStoreById(store_id);
+    }
+
+    @PostMapping("/delete")
+    public void deleteStore(@RequestBody Integer store_id) {
+        storeService.deleteStore(store_id);
     }
 
 //
