@@ -1,23 +1,16 @@
 package store.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class Employee {
     @Id
+    @JsonIgnore
     private String id;
 
     @MapsId
