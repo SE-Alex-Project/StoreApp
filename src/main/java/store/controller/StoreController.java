@@ -1,20 +1,31 @@
-//package store.controller;
+package store.controller;
 //
-//import Software.storeBackEnd.authentication.Validation;
-//import Software.storeBackEnd.database.StoreDatabase;
-//import net.minidev.json.JSONObject;
-//import net.minidev.json.parser.ParseException;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import store.models.Store;
+import store.security.JWT.JwtTokenUtil;
+import store.services.Implementation.StoreService;
+
+import javax.validation.Valid;
+
 //
-//import java.sql.SQLException;
 //
-//
-//@RestController
-//@CrossOrigin
-//@RequestMapping("/store")
-//public class StoreController {
+@RestController
+@CrossOrigin
+@RequestMapping("/store")
+public class StoreController {
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    StoreService storeService;
+
+    @PostMapping("/addStore")
+    public Store addStore(@RequestBody Store store) {
+        storeService.addStore(store);
+        return  store;
+    }
+
 //
 //    /*store json format
 //   {
@@ -69,4 +80,4 @@
 //    }
 //
 //
-//}
+}
