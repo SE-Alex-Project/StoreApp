@@ -35,12 +35,12 @@ public class EmployeeRepoTest {
 
         Store store =Store.builder()
                 .location("alex")
-                .storeName("store_1")
+                .name("store_1")
                 .build();
 //        storeRepo.save(store);
 
         Employee employee = Employee.builder()
-                .eRole("EMPLOYEE")
+//                .eRole("EMPLOYEE")
                 .salary(2500)
                 .store(store)
                 .user(user)
@@ -57,7 +57,7 @@ public class EmployeeRepoTest {
                 .build();
 //        userRepo.save(user2);
         Employee employee2 = Employee.builder()
-                .eRole("EMPLOYEE")
+//                .eRole("EMPLOYEE")
                 .salary(5000)
                 .store(store)
                 .user(user2)
