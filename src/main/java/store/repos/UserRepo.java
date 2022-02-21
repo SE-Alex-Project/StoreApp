@@ -3,11 +3,11 @@ package store.repos;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import store.models.Role;
 import store.models.User;
 
-import java.util.List;
-
 public interface UserRepo extends JpaRepository<User, String> {
+    Role getRoleByEmail(String userEmail);
     @Query(
             nativeQuery = true,
             value = """
@@ -18,7 +18,4 @@ public interface UserRepo extends JpaRepository<User, String> {
                     ORDER BY totalPrice DESC LIMIT :count ;"""
     )
     Object topUser(@Param("count") Integer count);
-
-    List<User> findTop10OrderedBy();
-
 }

@@ -63,4 +63,9 @@ public class EmployeeRepoTest {
 //
 //        employeerepo.save(employee2);
     }
+    @Test
+    void getStore() {
+
+    }
+
 }
