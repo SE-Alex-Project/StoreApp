@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 public class Store {
     @Id

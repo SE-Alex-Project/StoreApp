@@ -1,8 +1,5 @@
 package store.controller;
 
-
-import net.minidev.json.JSONArray;
-import net.minidev.json.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
@@ -36,8 +33,6 @@ public class CartController {
         String userEmail =  jwtTokenUtil.getUserEmailFromToken(jwtTokenUtil.parseHeaderAuth(token));
         return cartService.getCart(userEmail);
     }
-
-
 
     @PostMapping("/add")//validate_addToCart
     public void addToCart(@RequestHeader("Authorization") String token , @RequestBody Map<Product,Integer> products ) {
