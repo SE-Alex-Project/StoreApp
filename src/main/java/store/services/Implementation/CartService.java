@@ -21,7 +21,7 @@ public class CartService implements CartServiceInterface {
 
     @Override
     public Cart BuyCart(String userEmail) {
-
+        Cart c = getCart(userEmail);
         return null;
     }
 

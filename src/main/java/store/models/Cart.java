@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Entity
@@ -18,6 +19,8 @@ public class Cart {
     private User user;
     private Date buyDate;
 
-    @OneToMany(targetEntity = Product.class)
-    private List<Product> products;
+    @ElementCollection
+    @MapKeyJoinColumn(name = "product_id")
+    @Column(name = "quantity")
+    private Map<Product,Integer> products;
 }
