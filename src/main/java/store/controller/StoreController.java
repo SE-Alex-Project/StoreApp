@@ -4,7 +4,7 @@ package store.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import store.models.Store;
-import store.services.Implementation.StoreService;
+import store.services.interfaces.StoreService;
 
 import java.util.List;
 

@@ -9,6 +9,7 @@ import store.repos.ProductRepo;
 import store.services.interfaces.ProductService;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -52,6 +53,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(int productId) {
         productRepo.deleteById(productId);
+    }
+
+    @Override
+    public List<Map<String, String>> totalSales() {
+        return productRepo.totalSales();
+    }
+
+    @Override
+    public List<Map<String, String>> topSales(Integer count) {
+        return productRepo.topSales(count);
     }
 
 }

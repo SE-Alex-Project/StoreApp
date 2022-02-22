@@ -5,12 +5,11 @@ import store.models.Product;
 
 import java.util.Map;
 
-public interface CartServiceInterface {
+public interface CartService {
 
     Cart getCart(String userEmail);
 
-    //return new Saved Cart
-    void BuyCart(String userEmail,Integer StoreId);
+    void buyCart(String userEmail,Integer StoreId);
 
     void modifyCart(String userEmail, Map<Product,Integer> products);
 

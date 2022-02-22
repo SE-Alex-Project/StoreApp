@@ -20,8 +20,8 @@ public class Employee {
 
     @ManyToOne(cascade = CascadeType.REFRESH, targetEntity = Store.class)
     @JoinColumn
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     private Store store;
+
 //    private String eRole;
     private double salary;
 }

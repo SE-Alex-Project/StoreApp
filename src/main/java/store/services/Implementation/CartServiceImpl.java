@@ -2,25 +2,21 @@ package store.services.Implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import store.models.Cart;
 import store.models.Product;
 import store.models.Store;
-import store.models.User;
 import store.repos.CartRepo;
 import store.repos.StoreRepo;
 import store.repos.UserRepo;
-import store.services.interfaces.CartServiceInterface;
 
-import java.beans.Transient;
 import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class CartService implements CartServiceInterface {
+public class CartServiceImpl implements store.services.interfaces.CartService {
 
     @Autowired
     UserRepo userRepo;
@@ -36,7 +32,7 @@ public class CartService implements CartServiceInterface {
 
     @Override
     @Transactional
-    public void BuyCart(String userEmail, Integer StoreId) {
+    public void buyCart(String userEmail, Integer StoreId) {
         Cart c = getCart(userEmail);
         Optional<Store> store = storeRepo.findById(StoreId);
         if (store.isEmpty())

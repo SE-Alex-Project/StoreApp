@@ -1,11 +1,9 @@
 package store.services.interfaces;
 
-import store.models.Role;
 import store.models.Store;
 
 import java.util.List;
-
-public interface StoreServiceInterface {
+public interface StoreService {
     void addStore(Store store);
     List<Store> getAllStores();
     Store getStoreById(Integer store_id);
