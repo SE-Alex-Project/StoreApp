@@ -1,11 +1,13 @@
 package store.services.Implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import store.models.Cart;
 import store.models.Role;
 import store.models.User;
@@ -38,5 +40,32 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         cart.setUser(user);
         return user;
     }
+
+    @Override
+    public User GetUserByEmail(String email) {
+        return userRepo.findById(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User Doesn't Exist!"));
+    }
+
+
+    // need to be modified.
+    @Override
+    public User UpdateUser(User user) {
+        User SaveUser =GetUserByEmail(user.getEmail());
+        SaveUser.setFName(user.getFName());
+        SaveUser.setLName(user.getLName());
+        SaveUser.setPassword(user.getPassword()); // need to encode the password here.
+        SaveUser.setConfirmPassword(user.getConfirmPassword());
+        return userRepo.save(SaveUser);
+    }
+
+    @Override
+    public void DeleteUserByEmail(String userEmail) {
+        userRepo.deleteById(userEmail);;
+    }
+
+//    @Override
+//    public void LogOut(String email) {
+//        userRepo.deleteByEmail(email);
+//    }
 }
 

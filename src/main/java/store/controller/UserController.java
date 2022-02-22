@@ -1,97 +1,57 @@
-//package store.controller;
-//
-//import Software.storeBackEnd.authentication.Authentication;
-//import Software.storeBackEnd.authentication.TokenManager;
-//import Software.storeBackEnd.authentication.Validation;
-//import Software.storeBackEnd.database.UserDatabase;
-//import Software.storeBackEnd.entities.UserType;
-//import net.minidev.json.JSONObject;
-//import net.minidev.json.parser.ParseException;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.sql.SQLException;
-//import java.util.LinkedHashMap;
-//
+package store.controller;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import store.models.User;
+import store.security.JWT.JwtTokenUtil;
+import store.services.interfaces.UserService;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/user")
+public class UserController {
+    @Autowired
+    JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    UserService userService;
+
+    @GetMapping("/logOut")
+    public void logOut(@RequestHeader("Authorization") String token) {
+        // delete token .................
+    }
+
+
+    @GetMapping("/get_info")
+    public User userInfo(@RequestHeader("Authorization") String token) {
+        String userEmail =  jwtTokenUtil.getUserEmailFromToken(jwtTokenUtil.parseHeaderAuth(token));
+        return userService.GetUserByEmail(userEmail);
+    }
+
+
+    @GetMapping("/delete_account")
+    public void deleteMyAccount(@RequestHeader("Authorization") String token) {
+        String userEmail =  jwtTokenUtil.getUserEmailFromToken(jwtTokenUtil.parseHeaderAuth(token));
+        userService.DeleteUserByEmail(userEmail);
+    }
+
+
+    @PostMapping("/modifyInfo")
+    public User modifyInfo(@RequestBody User modifyUser) {
+        return userService.UpdateUser(modifyUser);
+    }
+
+    @PostMapping("/removeAccount")
+    public void removeAccount(@RequestBody String email) {
+        userService.DeleteUserByEmail(email);
+    }
+
+
+}
 //@CrossOrigin
 //@RestController
 //@RequestMapping("/user")
 //public class UserController {
-//
-//    private final UserDatabase userDataBase = new UserDatabase();
-//    TokenManager tokenManager = TokenManager.getInstance();
-//
-//    /*
-//     * log in json format { "email":user email, "password": user password }
-//     */
-//    @PostMapping("/logIn")
-//    public ResponseEntity<String> logIn(@RequestBody JSONObject logInJson) {
-//        try {
-//            Validation.validate_login(logInJson);
-//            String password = (String) logInJson.get("password");
-//            password = password.hashCode() + "";
-//            UserType userType = Authentication.getUserType(logInJson.getAsString("email"));
-//            boolean exist = false;
-//            switch (userType) {
-//                case Customer: {
-//                    exist = Authentication.isCustomer(logInJson.getAsString("email"), password);
-//                    break;
-//                }
-//                case Employee: {
-//                    exist = Authentication.isEmployee(logInJson.getAsString("email"), password);
-//                    break;
-//                }
-//                case Manager: {
-//                    exist = Authentication.isManager(logInJson.getAsString("email"), password);
-//                    break;
-//                }
-//            }
-//            if (!exist)
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                        .body("Wrong email or Password\n");
-//            return ResponseEntity.status(HttpStatus.OK)
-//                    .body(tokenManager.generateToken(logInJson.getAsString("email")));
-//        } catch (SQLException e) {
-//            return Controller.SqlEx(e);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//        }
-//    }
-//
-//    /*
-//     * sign up json format { "email":user email "firstName": user first name
-//     * "lastName": user last name "password": user hashed password }
-//     */
-//    @PostMapping("/signUp")
-//    public ResponseEntity<String> signUp(@RequestBody JSONObject signUpJson) {
-//        try {
-//            Validation.validate_signup(signUpJson);
-//            String password = (String) signUpJson.get("password");
-//            password = password.hashCode() + "";
-//            if(Authentication.getUserType(signUpJson.getAsString("email")) != UserType.Customer) {
-//            	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                        .body("Not an customer account.\n");
-//            }
-//            boolean exist = Authentication.isCustomerEmail(signUpJson.getAsString("email"));
-//            if (exist)
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                        .body("This Email Have an Account!!!\nLog In Instead");
-//            // create cart
-//            int id = userDataBase.createCart();
-//            // create user
-//            userDataBase.insertUser(signUpJson.getAsString("email"), signUpJson.getAsString("firstName"),
-//                    signUpJson.getAsString("lastName"), password, id);
-//            // update cart
-//            userDataBase.updateCart(signUpJson.getAsString("email"), id);
-//            return ResponseEntity.status(HttpStatus.OK)
-//                    .body(tokenManager.generateToken(signUpJson.getAsString("email")));
-//        } catch (SQLException e) {
-//            return Controller.SqlEx(e);
-//        } catch (RuntimeException e) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-//        }
-//    }
 //
 //    @PostMapping("/logOut")
 //    public void logOut(@RequestBody String userToken) {

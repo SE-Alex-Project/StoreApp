@@ -27,7 +27,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Store getStoreById(Integer store_id) {
-        return storeRepo.findById(store_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product Doesn't Exist!"));
+        return storeRepo.findById(store_id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Store Doesn't Exist!"));
     }
 
     @Override
