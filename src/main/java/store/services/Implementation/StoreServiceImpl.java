@@ -6,11 +6,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import store.models.Store;
 import store.repos.StoreRepo;
+import store.services.interfaces.StoreService;
 
 import java.util.List;
 
 @Service
-public class StoreServiceImpl implements store.services.interfaces.StoreService {
+public class StoreServiceImpl implements StoreService {
     @Autowired
     StoreRepo storeRepo;
 

@@ -3,6 +3,7 @@ package store.services.Implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import store.models.Employee;
 import store.models.restModles.EmployeeRequest;
@@ -43,5 +44,15 @@ public class EmployeeServiceImpl implements store.services.interfaces.EmployeeSe
     @Override
     public Employee getEmployee(String employeeEmail) {
         return employeeRepo.getById(employeeEmail);
+    }
+
+    @Override
+    @Transactional
+    public void modifyEmployee(EmployeeRequest employee) {
+        Employee e = employeeRepo.getById(employee.getUser().getEmail());
+        e.setUser(employee.getUser());
+        e.setStore(storeRepo.getById(employee.getStore()));
+        e.setSalary(employee.getSalary());
+        employeeRepo.save(e);
     }
 }

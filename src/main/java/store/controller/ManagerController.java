@@ -54,8 +54,8 @@ public class ManagerController {
 
 
     @PostMapping("/modifyEmployee")
-    public void modifyEmployee(@RequestBody JSONObject employee) {
-
+    public void modifyEmployee(@RequestBody EmployeeRequest employee) {
+        employeeService.modifyEmployee(employee);
     }
 
     @GetMapping("/topUsers")
